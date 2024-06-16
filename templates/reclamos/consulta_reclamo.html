@@ -1,0 +1,12 @@
+{% extends 'reclamos/base.html' %}
+{% load static %}
+
+{% block title %}Consulta de Reclamos{% endblock %}
+
+{% block extra_head %}
+<script src="{% static 'js/consulta_reclamo.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+    {% include 'reclamos/consulta_form.html' %}
+{% endblock %}

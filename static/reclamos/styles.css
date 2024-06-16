@@ -1,0 +1,35 @@
+/* styles.css */
+.modal-dialog-custom1{
+    max-width: 500px !important; /* Ajusta este valor según tus necesidades */
+    margin: 30px auto;
+}
+.modal-dialog-custom2{
+    max-width: 900px !important; /* Ajusta este valor según tus necesidades */
+    margin: 30px auto !important;
+}
+.modal-header-custom {
+    background-color: #e0f7fa !important;
+    padding: 15px !important;
+    border-radius: 10px 10px 0 0 !important; /* Esquinas redondeadas superiores */
+}
+.modal-header-custom .close:hover,
+.modal-header-custom .close:focus {
+    color: #000 !important; /* Color del icono de cierre cuando se pasa el cursor */
+    background-color: transparent !important; /* Quitar el fondo azul */
+}
+
+.modal-footer-custom {
+    background-color: #e0f7fa !important;
+    border-radius: 0 0 10px 10px !important; /* Esquinas redondeadas inferiores */
+}
+.section-title {
+    font-size: 18px !important; /* Aumenta el tamaño de la fuente */
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+    font-weight: bold !important; /* Negrita */
+}
+
+
+
+
+

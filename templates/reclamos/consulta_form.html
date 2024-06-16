@@ -1,0 +1,149 @@
+<h1>Consulta de Reclamos</h1>
+
+{% if error %}
+    <div class="alert alert-danger">{{ error }}</div>
+{% endif %}
+
+<form method="get" action="{% url 'consulta_reclamo' %}" onsubmit="return validateForm()">
+    <label for="codigo">Código del Reclamo:</label>
+    <input type="text" id="codigo" name="codigo" required>
+    <input type="hidden" name="token" value="{{ token }}">
+    <button type="submit" class="btn btn-primary">Consultar</button>
+</form>
+
+{% if reclamos %}
+    <!-- Alerta de reclamo encontrado -->
+    <div class="modal fade" id="alertaReclamo" tabindex="-1" role="dialog" aria-labelledby="alertaReclamoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-custom1" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title" id="alertaReclamoLabel">Registro encontrado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Se ha encontrado un registro con los criterios proporcionados.</p>
+                    <button type="button" class="btn btn-success" id="verDetallesBtn" data-toggle="modal" data-target="#reclamoModal">
+                        Ver Detalles del Reclamo
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="closeAlerta" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de detalles del reclamo -->
+    <div class="modal fade" id="reclamoModal" tabindex="-1" role="dialog" aria-labelledby="reclamoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-custom2" role="document">
+            <div class="modal-content">
+                <div class="modal-header modal-header-custom">
+                    <h5 class="modal-title" id="reclamoModalLabel">Detalles del Reclamo - Código: {{ reclamos.0.codigo }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="reclamo-section">
+                        <table class="table table-bordered styled-table">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Nombre</strong></td>
+                                    <td>{{ reclamos.0.nombre }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Apellidos</strong></td>
+                                    <td>{{ reclamos.0.apellidos }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Tipo de Documento</strong></td>
+                                    <td>{{ reclamos.0.tipo_documento }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Número de Documento</strong></td>
+                                    <td>{{ reclamos.0.numero_documento }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Correo Electrónico</strong></td>
+                                    <td>{{ reclamos.0.correo_electronico }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fecha</strong></td>
+                                    <td>{{ reclamos.0.fecha }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Hora</strong></td>
+                                    <td>{{ reclamos.0.hora }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Sede</strong></td>
+                                    <td>{{ reclamos.0.sede }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Descripción</strong></td>
+                                    <td>{{ reclamos.0.descripcion }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="estado-section">
+                        <h6 class="section-title">Detalles del Estado del Reclamo</h6>
+                        <table class="table table-bordered styled-table">
+                            <tbody>
+                                <tr>
+                                    <td><strong>Estado</strong></td>
+                                    <td>{{ reclamos.0.estado }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Oficina Recepción</strong></td>
+                                    <td>{{ reclamos.0.oficina_recepcion }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Oficina Derivación</strong></td>
+                                    <td>{{ reclamos.0.oficina_derivacion }}</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Fecha Derivación</strong></td>
+                                    <td>{{ reclamos.0.fecha_derivacion }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer modal-footer-custom">
+                    <form method="get" action="{% url 'exportar_pdf' %}">
+                        <input type="hidden" name="codigo" value="{{ reclamos.0.codigo }}">
+                        <button type="submit" class="btn btn-primary">Exportar a PDF</button>
+                    </form>
+                    <button type="button" class="btn btn-secondary" id="closeModal" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+<style>
+
+</style>
+{% elif request.GET.numero_documento or request.GET.id_reclamo %}
+    <!-- Alerta de no reclamo encontrado -->
+    <div class="modal fade" id="alertaNoReclamo" tabindex="-1" role="dialog" aria-labelledby="alertaNoReclamoLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="alertaNoReclamoLabel">No se encontraron reclamos</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>No se encontraron reclamos para los criterios proporcionados.</p>
+                    <p>Por favor, revisa tus datos e inténtalo nuevamente.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="closeNoReclamo" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endif %}
