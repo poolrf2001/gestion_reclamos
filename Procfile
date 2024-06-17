@@ -1,1 +1,3 @@
-web: python manage.py collectstatic && gunicorn gestion_reclamos.wsgi 
+release: python manage.py collectstatic --noinput
+web: gunicorn your_project.wsgi
+
