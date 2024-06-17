@@ -10,7 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 import os
+import dj_database_url
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,8 +32,8 @@ SECRET_KEY = 'django-insecure-zmkn#6=t$xwl+ei^!^md(!-h%m)ltqjt(mm7^#(=6r#=8dl@q5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['6b1c-45-173-202-17.ngrok-free.app','localhost']
-CSRF_TRUSTED_ORIGINS = ['https://6b1c-45-173-202-17.ngrok-free.app']
+ALLOWED_HOSTS = ['https://web-production-60e0b.up.railway.app/','localhost']
+CSRF_TRUSTED_ORIGINS = ['https://web-production-60e0b.up.railway.app/']
 
 
 
@@ -44,6 +47,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'whitenoise.runserver_nostatic',
     'reclamos',
     'import_export',
     'emails',
@@ -51,6 +55,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -85,14 +90,7 @@ WSGI_APPLICATION = 'gestion_reclamos.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'reclamos',
-        'USER': 'root',
-        'PASSWORD': 'admin1234',
-        'HOST': '127.0.0.1',  # O la dirección de tu servidor de base de datos
-        'PORT': '3306',  # O el puerto que uses
-    }
+    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'))
 }
 
 
@@ -133,8 +131,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 
 ]
-
-
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 

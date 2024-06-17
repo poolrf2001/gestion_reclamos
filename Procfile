@@ -1,1 +1,1 @@
-web: gunicorn gestion_reclamos.wsgi 
+web: python manage.py collectstatic && gunicorn gestion_reclamos.wsgi 
