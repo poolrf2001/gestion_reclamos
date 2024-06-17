@@ -94,7 +94,7 @@ WSGI_APPLICATION = 'gestion_reclamos.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-    'default': dj_database_url.config(default=os.getenv('DATABASE_URL'),engine='django.db.backends.mysql')
+    'default': dj_database_url.config(default=os.getenv('MYSQL_URL'),engine='django.db.backends.mysql')
 }
 if 'ENGINE' not in DATABASES['default']:
     raise ValueError("No se pudo configurar correctamente la base de datos.")
