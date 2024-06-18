@@ -48,8 +48,9 @@ def exportar_pdf_admin(modeladmin, request, queryset):
             ['Correo Electrónico', reclamo.correo_electronico],
             ['Teléfono', reclamo.telefono],
             ['Dirección', reclamo.direccion],
-            ['Distrito', reclamo.distrito],
+            ['Departamento', reclamo.departamento],
             ['Provincia', reclamo.provincia],
+            ['Distrito', reclamo.distrito],
             ['Fecha', reclamo.fecha],
             ['Hora', reclamo.hora],
             ['Sede', reclamo.sede],
@@ -120,13 +121,13 @@ class ReclamoAdmin(ImportExportModelAdmin):
     search_fields = ('nombre', 'apellidos', 'numero_documento')
     actions = [exportar_pdf_admin, enviar_correos]
 
-    readonly_fields = ('nombre', 'apellidos', 'tipo_documento', 'numero_documento', 'correo_electronico', 'telefono', 'direccion', 'distrito', 'provincia', 'fecha', 'hora', 'sede', 'descripcion', 'archivo', 'consentimiento', 'oficina_recepcion', 'codigo', 'fecha_derivacion', 'hora_derivacion')
+    readonly_fields = ('nombre', 'apellidos', 'tipo_documento', 'numero_documento', 'correo_electronico', 'telefono', 'direccion', 'departamento', 'provincia', 'distrito', 'fecha', 'hora', 'sede', 'descripcion', 'archivo', 'consentimiento', 'oficina_recepcion', 'codigo', 'fecha_derivacion', 'hora_derivacion')
 
     fieldsets = (
         (None, {
             'fields': (
                 'nombre', 'apellidos', 'tipo_documento', 'numero_documento', 'correo_electronico', 'telefono', 'direccion', 
-                'distrito', 'provincia', 'fecha', 'hora', 'sede', 'descripcion', 'archivo', 'consentimiento'
+                'departamento', 'provincia', 'distrito', 'fecha', 'hora', 'sede', 'descripcion', 'archivo', 'consentimiento'
             )
         }),
         ('Gestión de Reclamo', {
